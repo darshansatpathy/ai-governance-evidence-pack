@@ -1,0 +1,59 @@
+[system]
+id = "support-agent"
+name = "Customer-support agent (reference system)"
+summary = "A back-end agent that answers customer-support questions from a knowledge base and can propose state-changing actions such as a refund, which a person must approve. It is assembled from the repositories listed below. It is a reference design, not a deployed product."
+intended_purpose = "Assist support staff and customers by answering questions from approved documents and preparing actions for human approval."
+provider_role = "The repository owner builds and publishes the reference components; whoever deploys them becomes the provider of the resulting system for the purposes of the AI Act and must make that determination."
+deployer_role = "Not applicable to the reference repositories; applies to the organisation that runs a deployment."
+risk_note = "Not classified. Customer support is not obviously an Annex III use, but classification depends on the actual purpose and context and is a legal judgement that this pack does not make. Article 50 transparency duties would apply to a customer-facing chat."
+oversight = "Every state-changing action needs approval. The approval service binds approvals to exact arguments, makes them single use, separates requester and approver, and supports quorum and veto. Read-only actions are auto-approved by policy."
+logging = "Hash-chained audit logs in the agent harness, the approval service and the gateway; content fingerprinted and redacted by default; traces carry no message content by default."
+data = "Knowledge-base articles and order and customer records reached through governed tools. Personal data is masked by default in the lakehouse and in logs. No model training or fine-tuning is done."
+limitations = [
+  "Reference design: no deployment, no users and no production traffic have been observed.",
+  "No disclosure to end users that they are talking to an AI system (see EUAIA-50).",
+  "No declared accuracy level; the evaluation set covers an invented product.",
+  "Human oversight quality depends on approvers who are not modelled here.",
+  "Risk classification, impact assessment and data protection assessment have not been done.",
+]
+controls = [
+  "EUAIA-12", "EUAIA-14", "EUAIA-15", "EUAIA-50", "EUAIA-72",
+  "NIST-MP-3.5", "NIST-MS-2.7", "NIST-MG-2.4",
+  "ISO42001-A.6.2.4", "ISO42001-A.6.2.8", "ISO42001-A.9.2",
+]
+
+[[components]]
+repo = "claude-agent-reference"
+role = "Agent loop with budgets, approval-gated tools and an audit log."
+
+[[components]]
+repo = "agent-guardrails-gateway"
+role = "Policy enforcement at the tool boundary with signed grants and taint tracking."
+
+[[components]]
+repo = "human-in-the-loop-inbox"
+role = "Approval workflow for actions that need a person."
+
+[[components]]
+repo = "agent-eval-harness"
+role = "Regression gate for changes to the agent."
+
+[[components]]
+repo = "agent-tracing-otel"
+role = "Traces and cost per completed task, content off by default."
+
+[[components]]
+repo = "governed-data-agents"
+role = "Governed natural-language access to analytical data."
+
+[[components]]
+repo = "databricks-medallion-lakehouse"
+role = "Governed lakehouse that holds the analytical data."
+
+[[components]]
+repo = "azure-ai-landing-zone"
+role = "Private, keyless infrastructure for model endpoints."
+
+[[components]]
+repo = "ai-platform-reference-architecture"
+role = "The architecture, risk register and operating model the other components sit in."

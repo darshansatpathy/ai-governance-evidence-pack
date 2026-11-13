@@ -1,0 +1,46 @@
+# Repositories that hold evidence. Each is checked out beside this one when evidence is verified.
+
+[[repo]]
+name = "azure-ai-landing-zone"
+url = "https://github.com/darshansatpathy/azure-ai-landing-zone"
+role = "Private, keyless Azure foundation for AI workloads, with a policy checker (tfpolicy) over the Terraform."
+
+[[repo]]
+name = "claude-agent-reference"
+url = "https://github.com/darshansatpathy/claude-agent-reference"
+role = "A production-minded agent harness: hard budgets, approval-gated writes, hash-chained audit log, 27 hermetic evaluations."
+
+[[repo]]
+name = "ai-platform-reference-architecture"
+url = "https://github.com/darshansatpathy/ai-platform-reference-architecture"
+role = "A governed enterprise AI platform kept as data and checked by architecture fitness functions; includes the risk register and operating model."
+
+[[repo]]
+name = "databricks-medallion-lakehouse"
+url = "https://github.com/darshansatpathy/databricks-medallion-lakehouse"
+role = "A spec-driven Databricks medallion lakehouse with a policy linter, generated governance SQL and a reference executor."
+
+[[repo]]
+name = "agent-guardrails-gateway"
+url = "https://github.com/darshansatpathy/agent-guardrails-gateway"
+role = "A tool-boundary gateway: default-deny policy, signed task grants, approvals bound to call fingerprints, taint tracking, hash-chained audit."
+
+[[repo]]
+name = "agent-eval-harness"
+url = "https://github.com/darshansatpathy/agent-eval-harness"
+role = "An evaluation gate for agents: reviewed golden set, deterministic graders first, a calibrated judge, significance-tested regression gate."
+
+[[repo]]
+name = "agent-tracing-otel"
+url = "https://github.com/darshansatpathy/agent-tracing-otel"
+role = "OpenTelemetry tracing for agents with cost per completed task, content off by default and redaction at the collector."
+
+[[repo]]
+name = "human-in-the-loop-inbox"
+url = "https://github.com/darshansatpathy/human-in-the-loop-inbox"
+role = "A human approval service: grants bound to exact arguments, separation of duties, quorum rules, tamper-evident audit."
+
+[[repo]]
+name = "governed-data-agents"
+url = "https://github.com/darshansatpathy/governed-data-agents"
+role = "Natural-language data access with plans instead of SQL, row-level security and column privileges enforced in the database, and an audit trail."

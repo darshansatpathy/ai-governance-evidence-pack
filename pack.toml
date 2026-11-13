@@ -1,0 +1,2 @@
+# Settings for govpack.
+review_days = 180   # a mapping or control list older than this fails GOV008

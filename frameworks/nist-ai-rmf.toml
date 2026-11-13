@@ -1,0 +1,120 @@
+[framework]
+id = "nist-ai-rmf"
+name = "NIST AI RMF 1.0"
+citation = "NIST AI 100-1, Artificial Intelligence Risk Management Framework (AI RMF 1.0), January 2023"
+source = "https://www.nist.gov/itl/ai-risk-management-framework"
+ref_pattern = "(GOVERN|MAP|MEASURE|MANAGE) \\d+\\.\\d+"
+checked = 2026-11-13
+note = "Subcategory identifiers only; each summary is a paraphrase. The framework is voluntary and is not a checklist, and NIST has said it is under revision, so check the current Playbook before relying on a subcategory."
+
+[[controls]]
+id = "NIST-GV-1.4"
+ref = "GOVERN 1.4"
+title = "Risk management through transparent policies"
+summary = "The risk management process and its outcomes are set out in transparent policies, procedures and other controls that reflect the organisation's risk priorities."
+applies_to = "both"
+kind = "mixed"
+
+[[controls]]
+id = "NIST-GV-1.6"
+ref = "GOVERN 1.6"
+title = "AI system inventory"
+summary = "Mechanisms exist to inventory AI systems, and they are resourced according to the organisation's risk priorities."
+applies_to = "both"
+kind = "mixed"
+
+[[controls]]
+id = "NIST-GV-2.1"
+ref = "GOVERN 2.1"
+title = "Roles and responsibilities"
+summary = "Roles, responsibilities and lines of communication for mapping, measuring and managing AI risk are documented and clear across the organisation."
+applies_to = "both"
+kind = "organisational"
+
+[[controls]]
+id = "NIST-MP-1.1"
+ref = "MAP 1.1"
+title = "Intended purpose and context"
+summary = "Intended purposes, beneficial uses, relevant laws and norms, and the settings in which the system will be used are understood and documented."
+applies_to = "both"
+kind = "mixed"
+
+[[controls]]
+id = "NIST-MP-3.5"
+ref = "MAP 3.5"
+title = "Human oversight processes"
+summary = "Processes for human oversight are defined, assessed and documented in line with the organisation's governance policies."
+applies_to = "both"
+kind = "mixed"
+
+[[controls]]
+id = "NIST-MS-2.1"
+ref = "MEASURE 2.1"
+title = "Test sets, metrics and tooling documented"
+summary = "Test sets, metrics and the tools used for testing, evaluation, validation and verification are documented."
+applies_to = "both"
+kind = "technical"
+
+[[controls]]
+id = "NIST-MS-2.5"
+ref = "MEASURE 2.5"
+title = "Valid and reliable"
+summary = "The system to be deployed is shown to be valid and reliable, and limits on how far results generalise beyond the conditions of development are documented."
+applies_to = "both"
+kind = "technical"
+
+[[controls]]
+id = "NIST-MS-2.7"
+ref = "MEASURE 2.7"
+title = "Security and resilience evaluated"
+summary = "Security and resilience of the system, as identified during mapping, are evaluated and documented."
+applies_to = "both"
+kind = "technical"
+
+[[controls]]
+id = "NIST-MS-2.10"
+ref = "MEASURE 2.10"
+title = "Privacy risk examined"
+summary = "Privacy risk of the system, as identified during mapping, is examined and documented."
+applies_to = "both"
+kind = "mixed"
+
+[[controls]]
+id = "NIST-MS-3.1"
+ref = "MEASURE 3.1"
+title = "Tracking risks over time"
+summary = "Approaches, people and documentation exist to regularly identify and track existing, unanticipated and emergent risks, using intended and actual performance in deployed contexts."
+applies_to = "both"
+kind = "mixed"
+
+[[controls]]
+id = "NIST-MG-1.4"
+ref = "MANAGE 1.4"
+title = "Negative residual risk documented"
+summary = "Negative residual risks to downstream acquirers and end users, meaning the sum of unmitigated risks, are documented."
+applies_to = "both"
+kind = "mixed"
+
+[[controls]]
+id = "NIST-MG-2.4"
+ref = "MANAGE 2.4"
+title = "Mechanisms to supersede, disengage or deactivate"
+summary = "Mechanisms exist and are applied, and responsibilities assigned, to supersede, disengage or deactivate systems that perform inconsistently with intended use."
+applies_to = "both"
+kind = "mixed"
+
+[[controls]]
+id = "NIST-MG-4.1"
+ref = "MANAGE 4.1"
+title = "Post-deployment monitoring"
+summary = "Post-deployment monitoring plans are implemented, covering feedback from users and other actors, appeal and override, decommissioning, incident response, recovery and change management."
+applies_to = "both"
+kind = "mixed"
+
+[[controls]]
+id = "NIST-MG-4.3"
+ref = "MANAGE 4.3"
+title = "Incidents and errors communicated"
+summary = "Incidents and errors are communicated to relevant parties including affected communities, and processes for tracking, responding to and recovering from them are followed and documented."
+applies_to = "both"
+kind = "organisational"

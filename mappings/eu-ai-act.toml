@@ -1,0 +1,422 @@
+# Mappings for eu-ai-act. Every control has exactly one mapping. Statuses are conservative; see docs/method.md.
+framework = "eu-ai-act"
+
+[[mapping]]
+control = "EUAIA-04"
+status = "organisational"
+reviewed = 2026-11-13
+rationale = "Literacy measures are about people: who is trained, on what, and how that is recorded. No repository can show it."
+owner = "AI governance lead"
+next_step = "Define role-based AI literacy measures for staff who operate or oversee AI systems and record completion."
+
+[[mapping]]
+control = "EUAIA-09"
+status = "partial"
+reviewed = 2026-11-13
+rationale = "Risks are identified, scored, owned and tied to mitigations in the platform risk register, and each reference system carries a threat model with controls and residual risk. These are design-time artefacts for reference systems."
+limits = "No lifecycle risk process for a specific deployed system: no testing against foreseeable misuse for a declared purpose, no residual-risk acceptance record, no review trigger on substantial modification."
+owner = "Model risk lead"
+next_step = "Adopt the risk register as a template for each deployed system, add a residual-risk acceptance step and a review trigger on change."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/risk-register.md"
+kind = "doc"
+contains = "Prompt injection causes a harmful action"
+shows = "A risk register with likelihood, impact, mitigations tied to ADRs and components, early indicators and an owning team."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "docs/threat-model.md"
+kind = "doc"
+contains = "What this does not solve"
+shows = "Twelve threats each with a control and the test that covers it, plus an explicit list of what the harness does not solve."
+
+[[mapping.evidence]]
+repo = "agent-guardrails-gateway"
+path = "docs/threat-model.md"
+kind = "doc"
+contains = "Approval laundering"
+shows = "Threat model for the tool boundary with per-threat mitigation and residual risk, including approval laundering and replay."
+
+[[mapping.evidence]]
+repo = "azure-ai-landing-zone"
+path = "docs/threat-model.md"
+kind = "doc"
+contains = "The method is STRIDE per trust boundary"
+shows = "A STRIDE threat model per trust boundary for the Azure foundation; each control names the rule or test that fails if it is removed."
+
+[[mapping]]
+control = "EUAIA-10"
+status = "partial"
+reviewed = 2026-11-13
+rationale = "The lakehouse reference enforces classification, masking of personal data, expectations with a quarantine table, lineage and least-privilege access, and the data agent enforces access in the database. These cover operational data governance."
+limits = "Article 10 is about training, validation and testing data for high-risk systems. Nothing here trains a model or examines datasets for bias, representativeness or gaps. The Spark SQL has not been run on Databricks."
+owner = "Head of data governance"
+next_step = "For any system that trains or evaluates on its own data, add a dataset record covering provenance, selection, bias examination and known gaps."
+
+[[mapping.evidence]]
+repo = "databricks-medallion-lakehouse"
+path = "docs/generated/classification.md"
+kind = "doc"
+contains = "Personal data columns and masks"
+shows = "Generated from the specification: every table's classification and owner, and which columns hold personal data and carry which mask."
+
+[[mapping.evidence]]
+repo = "databricks-medallion-lakehouse"
+path = "src/medallion/policy.py"
+kind = "code"
+contains = "MED007"
+shows = "A lint rule fails the build when a personal-data column lacks a mask or a derived column copies the raw value."
+
+[[mapping.evidence]]
+repo = "databricks-medallion-lakehouse"
+path = "docs/adr/0003-expectations-and-quarantine.md"
+kind = "doc"
+contains = "write it, with the names of the rules it failed"
+shows = "Rows failing a drop expectation are kept in a quarantine table with the names of the rules they failed."
+
+[[mapping.evidence]]
+repo = "databricks-medallion-lakehouse"
+path = "docs/generated/lineage.md"
+kind = "doc"
+contains = "# Lineage"
+shows = "Generated lineage from landing files through bronze and silver to gold."
+
+[[mapping.evidence]]
+repo = "governed-data-agents"
+path = "docs/adr/0002-enforce-in-the-database.md"
+kind = "doc"
+contains = "PostgreSQL row-level security"
+shows = "Regions are enforced by row-level security and personal data by column privileges in the database, not only in application code."
+
+[[mapping]]
+control = "EUAIA-11"
+status = "partial"
+reviewed = 2026-11-13
+rationale = "Architecture, decision records, threat models, evaluation reports and generated inventories document the reference systems, and this pack's system record gathers them in one place."
+limits = "The documents are not organised to the Annex IV headings and describe reference designs, not a product placed on the market. Intended performance levels, validation results for a specific system and a change history against it are missing."
+owner = "Product owner of the deployed system"
+next_step = "Map the system record to the Annex IV headings for the deployed system and keep it under version control with the code."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/architecture.md"
+kind = "doc"
+contains = "One way in, one way out"
+shows = "Architecture principles of the governed platform, including one gateway for all model traffic, with the design kept as data and checked by fitness functions."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "docs/architecture.md"
+kind = "doc"
+contains = "The package is small enough to read in one sitting"
+shows = "Architecture of the agent harness: turn loop, client with a same-origin check, and a tool registry that validates, approves, runs, truncates and wraps."
+
+[[mapping.evidence]]
+repo = "agent-eval-harness"
+path = "docs/eval-report.md"
+kind = "doc"
+contains = "The gate on five candidate changes"
+shows = "Shows the gate catching five deliberately degraded agent variants, including one that disables the injection guard."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "catalog/platform.toml"
+kind = "config"
+contains = "DESIGN TARGETS"
+shows = "The platform's components, owners, trust zones, data classes, dependencies and design targets as checked data."
+
+[[mapping]]
+control = "EUAIA-12"
+status = "implemented"
+reviewed = 2026-11-13
+rationale = "Several reference implementations record events automatically in tamper-evident form: the agent harness (hash-chained, redacted, verifiable), the approval service (hash-chained event log), the gateway (HMAC-chained records) and the data agent (an audit table)."
+limits = "Deleting the tail of a hash-chained file is not detectable from the file alone; the latest hash must be stored where the agent cannot write. Retention periods, access to logs and what counts as a relevant event are deployment decisions not made here."
+owner = "Platform security lead"
+next_step = "In each deployment, anchor the head hash externally, set a retention period, and document which events are recorded for which risk."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "src/claude_agent/audit.py"
+kind = "code"
+contains = "def verify_chain"
+shows = "Audit events are hash-chained and a verifier detects edited, removed or reordered lines; content is fingerprinted and redacted before hashing."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "tests/test_audit.py"
+kind = "test"
+contains = "test_removed_or_reordered_lines_are_detected"
+shows = "Tests that tampering, removal and reordering of audit lines are detected, and that secrets and card numbers are redacted."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "evals/scenarios/26-audit-redaction.json"
+kind = "test"
+contains = "audit_excludes"
+shows = "A scenario asserts that an email address and an API key in the prompt never appear in the audit log."
+
+[[mapping.evidence]]
+repo = "human-in-the-loop-inbox"
+path = "src/hitl/schema.sql"
+kind = "code"
+contains = "Tamper-evident log"
+shows = "The approval service keeps an event log in which each record's hash covers the previous record."
+
+[[mapping.evidence]]
+repo = "agent-guardrails-gateway"
+path = "docs/adr/0005-hash-chained-audit-log.md"
+kind = "doc"
+contains = "Keyed hash chain for the audit log"
+shows = "Gateway decisions are written to an HMAC-chained log whose verification names the first bad record."
+
+[[mapping.evidence]]
+repo = "governed-data-agents"
+path = "src/gda/audit.py"
+kind = "code"
+contains = "audit.queries"
+shows = "Every question, plan, outcome and row count is appended to an audit table by the service's own login."
+
+[[mapping]]
+control = "EUAIA-13"
+status = "partial"
+reviewed = 2026-11-13
+rationale = "Each repository documents what it does not solve, its assumptions and what has and has not been verified, which supports honest information to deployers."
+limits = "These are developer documents, not instructions for use covering intended purpose, declared accuracy, foreseeable misuse and the oversight measures a deployer must apply."
+owner = "Product owner of the deployed system"
+next_step = "Write instructions for use for the deployed system from the system record, including declared accuracy and limits."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "docs/threat-model.md"
+kind = "doc"
+contains = "What this does not solve"
+shows = "Twelve threats each with a control and the test that covers it, plus an explicit list of what the harness does not solve."
+
+[[mapping.evidence]]
+repo = "databricks-medallion-lakehouse"
+path = "docs/oracle-assumptions.md"
+kind = "doc"
+contains = "It is a model"
+shows = "States what the reference executor assumes about Databricks and what is not modelled."
+
+[[mapping.evidence]]
+repo = "agent-eval-harness"
+path = "README.md"
+kind = "doc"
+contains = "blocks pull requests that make the agent worse"
+shows = "Describes an evaluation harness that runs in CI and blocks pull requests that make the agent worse."
+
+[[mapping]]
+control = "EUAIA-14"
+status = "implemented"
+reviewed = 2026-11-13
+rationale = "Writes need approval by default across the agent harness and the gateway; the approval service binds an approval to the exact arguments, makes it single use, separates the requester from the approver, supports quorum and veto, and lets an agent cancel its own requests. A scenario shows an injected instruction cannot cause a refund."
+limits = "A rubber-stamp approver defeats the control. Nothing here addresses automation bias, training or competence of overseers (Article 14(4)), or a stop control for a whole deployed system."
+owner = "Product owner of the deployed system"
+next_step = "Show approvers the exact arguments, measure approval time and override rate, train overseers, and document how to halt the system."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "docs/adr/0003-approval-gated-writes.md"
+kind = "doc"
+contains = "default approver denies"
+shows = "State-changing tools require approval and the default approver denies, so a model fooled by injected text still cannot act."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "evals/scenarios/08-injection-in-document-cannot-refund.json"
+kind = "test"
+contains = "injection-in-document-cannot-refund"
+shows = "A scripted model obeys hostile text in a document and asks for a refund; the scenario asserts that no refund happens."
+
+[[mapping.evidence]]
+repo = "human-in-the-loop-inbox"
+path = "docs/guarantees.md"
+kind = "doc"
+contains = "The person an agent acts for cannot approve it"
+shows = "Lists each approval guarantee (arguments-bound grants, single use, separation of duties, quorum, expiry) with the test that holds it."
+
+[[mapping.evidence]]
+repo = "human-in-the-loop-inbox"
+path = "policy.yaml"
+kind = "config"
+contains = "never-delete-production"
+shows = "Which agent actions need a human is declared as data: read-only actions auto-approve, production deletes are denied, refunds are tiered by amount."
+
+[[mapping.evidence]]
+repo = "agent-guardrails-gateway"
+path = "policies/support-agent.yaml"
+kind = "config"
+contains = "Anything not listed here is denied."
+shows = "A default-deny tool policy with risk levels, untrusted-output and egress markers, and a maximum grant lifetime."
+
+[[mapping]]
+control = "EUAIA-15"
+status = "partial"
+reviewed = 2026-11-13
+rationale = "The harness has 27 hermetic scenarios for safety properties, hard budgets, bounded retries and credential handling; the evaluation gate blocks regressions using a calibrated judge and a significance test; the landing zone policy checker enforces private access and keyless authentication; the gateway runs an attack corpus in CI."
+limits = "No accuracy level is declared for any specific deployed system. The harness scenarios test the harness, not a model; the gate's golden set covers an invented product. No independent penetration test."
+owner = "Model risk lead"
+next_step = "Declare accuracy metrics and thresholds for the deployed system, build a golden set from its real tasks and commission an independent security test."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "docs/evals.md"
+kind = "doc"
+contains = "Do the scenarios fail when they should?"
+shows = "27 hermetic scenarios test the harness, and the documented mutation check disabled each safety mechanism to prove the suite fails when it should."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "src/claude_agent/budget.py"
+kind = "code"
+contains = "class BudgetTracker"
+shows = "Tracks consumption against the configured budgets and ends the run when one is exceeded."
+
+[[mapping.evidence]]
+repo = "agent-eval-harness"
+path = "docs/adr/0004-gate-rules.md"
+kind = "doc"
+contains = "McNemar"
+shows = "A candidate agent is blocked on any critical failure, metric regression beyond tolerance, latency rise, or a significant excess of regressions over fixes."
+
+[[mapping.evidence]]
+repo = "agent-eval-harness"
+path = "gate.yaml"
+kind = "config"
+contains = "min_judge_kappa"
+shows = "Gate tolerances and the minimum judge agreement are declared in a reviewed file."
+
+[[mapping.evidence]]
+repo = "agent-eval-harness"
+path = "judge-calibration.json"
+kind = "config"
+contains = "\"kappa\":"
+shows = "Records how well the automated judge agrees with labelled statements (kappa, accuracy, detection by error type)."
+
+[[mapping.evidence]]
+repo = "agent-guardrails-gateway"
+path = "docs/adr/0006-attack-corpus-in-ci.md"
+kind = "doc"
+contains = "attack corpus"
+shows = "A corpus of attack and benign scenarios runs against the real gateway in CI so a policy change cannot quietly reopen a hole."
+
+[[mapping.evidence]]
+repo = "azure-ai-landing-zone"
+path = "src/tfpolicy/rules.py"
+kind = "code"
+contains = "TFP016"
+shows = "A policy rule fails Terraform that deploys a model without naming a content filter policy; neighbouring rules require private access and keyless authentication."
+
+[[mapping]]
+control = "EUAIA-17"
+status = "organisational"
+reviewed = 2026-11-13
+rationale = "A quality management system is an organisation-wide, documented set of procedures. Supporting engineering practice exists in the platform operating model (change classes, governance cadence, waivers) and in review and CI gates across the repositories."
+owner = "Head of quality"
+next_step = "Decide whether Article 17 applies, and if so write the quality manual and map the engineering gates to it."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/operating-model.md"
+kind = "doc"
+contains = "Responsibilities (RACI)"
+shows = "A responsibility matrix, change classes, an onboarding path for new use cases, a governance cadence and a waiver process."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "src/archfit/rules.py"
+kind = "code"
+contains = "FIT002"
+shows = "Architecture fitness functions that fail a design change when a component breaks a stated rule."
+
+[[mapping]]
+control = "EUAIA-26"
+status = "organisational"
+reviewed = 2026-11-13
+rationale = "Deployer duties are about how an organisation uses a system: assigned overseers, input data quality, monitoring, log retention and informing workers. The approval policy and audit tooling support them."
+owner = "Business owner of the deployed system"
+next_step = "Name the overseers, set log retention, document monitoring and, where applicable, inform workers and affected people."
+
+[[mapping.evidence]]
+repo = "human-in-the-loop-inbox"
+path = "policy.yaml"
+kind = "config"
+contains = "never-delete-production"
+shows = "Which agent actions need a human is declared as data: read-only actions auto-approve, production deletes are denied, refunds are tiered by amount."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "src/claude_agent/audit.py"
+kind = "code"
+contains = "def verify_chain"
+shows = "Audit events are hash-chained and a verifier detects edited, removed or reordered lines; content is fingerprinted and redacted before hashing."
+
+[[mapping]]
+control = "EUAIA-50"
+status = "gap"
+reviewed = 2026-11-13
+rationale = "No repository here tells an end user that they are interacting with an AI system, or marks generated content. The reference systems are back-end components with no user interface."
+owner = "Product owner of the deployed system"
+next_step = "Add a disclosure to every user-facing channel (chat, email, voice) and record where it appears; decide how generated content is marked."
+
+[[mapping]]
+control = "EUAIA-72"
+status = "partial"
+reviewed = 2026-11-13
+rationale = "Tracing, cost and success-ratio alerts (with unit tests for the alert rules), a regression gate with a stored baseline, availability registers and incident runbooks give raw material for a monitoring plan."
+limits = "There is no post-market monitoring plan as such: no list of performance indicators tied to declared accuracy, no feedback intake from deployers, and no link from monitoring to serious-incident reporting."
+owner = "Model risk lead"
+next_step = "Write a monitoring plan for the deployed system naming indicators, thresholds, data sources, review cadence and the escalation path to incident reporting."
+
+[[mapping.evidence]]
+repo = "agent-tracing-otel"
+path = "deploy/prometheus/rules.yaml"
+kind = "config"
+contains = "AgentSuccessRatioLow"
+shows = "Alert rules for cost per completed task, success ratio, model-call errors and unpriced models."
+
+[[mapping.evidence]]
+repo = "agent-tracing-otel"
+path = "deploy/prometheus/rules_test.yaml"
+kind = "test"
+contains = "AgentSuccessRatioLow"
+shows = "Unit tests for the alert rules."
+
+[[mapping.evidence]]
+repo = "agent-eval-harness"
+path = "docs/eval-report.md"
+kind = "doc"
+contains = "The gate on five candidate changes"
+shows = "Shows the gate catching five deliberately degraded agent variants, including one that disables the injection guard."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/generated/slo-register.md"
+kind = "doc"
+contains = "Availability register"
+shows = "A generated availability register per component: tier, target and the ceiling implied by hard dependencies; targets are design values, not measurements."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/runbooks/agent-runtime.md"
+kind = "doc"
+contains = "## Symptoms"
+shows = "A runbook for the agent runtime with ownership, recovery targets, symptoms, first checks, mitigations and after-incident steps."
+
+[[mapping]]
+control = "EUAIA-73"
+status = "organisational"
+reviewed = 2026-11-13
+rationale = "Reporting to authorities within legal deadlines is a legal and operational process. The incident runbooks give a starting structure."
+owner = "Legal and compliance"
+next_step = "Define what counts as a serious incident, who decides, the reporting deadlines and the contact route to the market surveillance authority."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/runbooks/agent-runtime.md"
+kind = "doc"
+contains = "## Symptoms"
+shows = "A runbook for the agent runtime with ownership, recovery targets, symptoms, first checks, mitigations and after-incident steps."

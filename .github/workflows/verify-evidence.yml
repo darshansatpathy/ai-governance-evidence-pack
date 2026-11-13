@@ -1,0 +1,58 @@
+name: Verify evidence
+
+# Checks every evidence file in every registered repository against evidence.lock.json and
+# against the text that justifies its use, and enforces review freshness. A failure means the
+# evidence moved or the pack aged: follow docs/runbooks/evidence-drift.md.
+on:
+  schedule:
+    - cron: "41 4 * * 1"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [evidence.lock.json, mappings/**, repos.toml]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-evidence
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Verify evidence against the repositories
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        run: pip install -e .
+      - name: Check out the evidence repositories (read-only, default branch, no credentials)
+        run: |
+          python - <<'PY' > repos.list
+          import tomllib
+          with open("repos.toml", "rb") as fh:
+              for r in tomllib.load(fh)["repo"]:
+                  print(r["name"], r["url"])
+          PY
+          mkdir -p ../evidence
+          while read -r name url; do
+            git clone --depth 1 --quiet "$url" "../evidence/$name"
+          done < repos.list
+      - name: Policy rules, including review freshness
+        run: govpack check --fail-on low --format markdown | tee check.md
+      - name: Evidence matches the lock
+        run: govpack verify --repos ../evidence | tee verify.txt
+      - name: Publish summary
+        if: always()
+        run: |
+          {
+            echo '## Evidence verification'
+            echo '```text'
+            cat verify.txt 2>/dev/null || true
+            echo '```'
+            cat check.md 2>/dev/null || true
+          } >> "$GITHUB_STEP_SUMMARY"

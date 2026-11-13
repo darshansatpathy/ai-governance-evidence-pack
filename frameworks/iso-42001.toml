@@ -1,0 +1,120 @@
+[framework]
+id = "iso-42001"
+name = "ISO/IEC 42001:2023"
+citation = "ISO/IEC 42001:2023, Information technology, Artificial intelligence, Management system, Annex A reference controls"
+source = "https://www.iso.org/standard/81230.html"
+ref_pattern = "A\\.\\d+\\.\\d+(\\.\\d+)?"
+checked = 2026-11-13
+note = "Annex A control numbers with short descriptive titles that are not the standard's wording; each summary is a paraphrase. Annex A is a reference set that an organisation selects from through a Statement of Applicability, so a control listed here is not automatically required. Read the standard itself before citing a control."
+
+[[controls]]
+id = "ISO42001-A.2.2"
+ref = "A.2.2"
+title = "AI policy"
+summary = "The organisation has a documented AI policy appropriate to its purpose, approved by management and communicated."
+applies_to = "both"
+kind = "organisational"
+
+[[controls]]
+id = "ISO42001-A.3.2"
+ref = "A.3.2"
+title = "AI roles and responsibilities"
+summary = "Roles and responsibilities for AI are defined and allocated across the organisation."
+applies_to = "both"
+kind = "organisational"
+
+[[controls]]
+id = "ISO42001-A.4.2"
+ref = "A.4.2"
+title = "Resource documentation"
+summary = "The resources needed for AI systems and their life cycle, including data, tooling, computing and people, are identified and documented."
+applies_to = "both"
+kind = "mixed"
+
+[[controls]]
+id = "ISO42001-A.5.2"
+ref = "A.5.2"
+title = "AI system impact assessment process"
+summary = "A process exists to assess the potential consequences of AI systems for individuals, groups and society, and the results are recorded."
+applies_to = "both"
+kind = "organisational"
+
+[[controls]]
+id = "ISO42001-A.6.2.4"
+ref = "A.6.2.4"
+title = "Verification and validation"
+summary = "Verification and validation measures for the AI system are defined, and criteria for their use are documented."
+applies_to = "both"
+kind = "technical"
+
+[[controls]]
+id = "ISO42001-A.6.2.6"
+ref = "A.6.2.6"
+title = "Operation and monitoring"
+summary = "Elements needed for ongoing operation, including monitoring, repair, updates and support, are defined and documented."
+applies_to = "both"
+kind = "mixed"
+
+[[controls]]
+id = "ISO42001-A.6.2.7"
+ref = "A.6.2.7"
+title = "Technical documentation"
+summary = "Technical documentation of the AI system is provided to the interested parties who need it."
+applies_to = "both"
+kind = "mixed"
+
+[[controls]]
+id = "ISO42001-A.6.2.8"
+ref = "A.6.2.8"
+title = "Recording of event logs"
+summary = "The organisation decides at which stages event logs are recorded and keeps them at least while the system is in use."
+applies_to = "both"
+kind = "technical"
+
+[[controls]]
+id = "ISO42001-A.7.4"
+ref = "A.7.4"
+title = "Quality of data for AI systems"
+summary = "Requirements for data quality are defined and ensured for the data used by AI systems."
+applies_to = "both"
+kind = "mixed"
+
+[[controls]]
+id = "ISO42001-A.7.5"
+ref = "A.7.5"
+title = "Data provenance"
+summary = "A process records the provenance of data used in AI systems over their life cycle."
+applies_to = "both"
+kind = "mixed"
+
+[[controls]]
+id = "ISO42001-A.8.2"
+ref = "A.8.2"
+title = "System documentation and information for users"
+summary = "Information needed by users to understand and use the system is determined and provided."
+applies_to = "both"
+kind = "mixed"
+
+[[controls]]
+id = "ISO42001-A.8.4"
+ref = "A.8.4"
+title = "Communication of incidents"
+summary = "The organisation determines and documents how it communicates incidents to interested parties."
+applies_to = "both"
+kind = "organisational"
+
+[[controls]]
+id = "ISO42001-A.9.2"
+ref = "A.9.2"
+title = "Processes for responsible use"
+summary = "The organisation defines and documents processes for the responsible use of AI systems."
+applies_to = "both"
+kind = "organisational"
+
+[[controls]]
+id = "ISO42001-A.10.3"
+ref = "A.10.3"
+title = "Suppliers"
+summary = "A process ensures that services, products or materials from suppliers are used consistently with the organisation's responsible AI approach."
+applies_to = "both"
+kind = "organisational"

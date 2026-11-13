@@ -1,0 +1,206 @@
+{
+  "files": {
+    "agent-eval-harness:README.md": {
+      "sha256": "0d7acd195ca131726cec96eb250898347ede3635ab848c52c24723d10ee22ead",
+      "size": 7623
+    },
+    "agent-eval-harness:docs/adr/0004-gate-rules.md": {
+      "sha256": "122b2a2384f9c28c26f6e5e934b488b23bc67fe654c35fda739ede89130567a9",
+      "size": 1176
+    },
+    "agent-eval-harness:docs/eval-report.md": {
+      "sha256": "4efaf799e070c35025528b8644f3fc624b4fa22c414a2653a2ec93629cc2c48d",
+      "size": 5474
+    },
+    "agent-eval-harness:gate.yaml": {
+      "sha256": "fca6ebed904db9a9b2817dc51d146ab016b253683909b126e5a9a0a8a52c02e8",
+      "size": 299
+    },
+    "agent-eval-harness:judge-calibration.json": {
+      "sha256": "f77d0f558ac58219342be05b2cf284821adefb566906609f4ff07e8bcc91ed83",
+      "size": 994
+    },
+    "agent-guardrails-gateway:docs/adr/0005-hash-chained-audit-log.md": {
+      "sha256": "0e316ab66bc41db77afdd89712b02e85a9bf21b57f8bc89e137fafc4bb72a2f6",
+      "size": 1205
+    },
+    "agent-guardrails-gateway:docs/adr/0006-attack-corpus-in-ci.md": {
+      "sha256": "3d26e018b67fa3f43ed28f75967ed85ff5671e63d51f776af86ecbdf6eedd4aa",
+      "size": 1563
+    },
+    "agent-guardrails-gateway:docs/threat-model.md": {
+      "sha256": "1206777db578ea1d27e2774702d61cfa94cdd6b921db3b74219a2233a7cea1a5",
+      "size": 3965
+    },
+    "agent-guardrails-gateway:policies/support-agent.yaml": {
+      "sha256": "3e97234672eea9017cdf0d5d10597190c7b36d29217bca05731ea0dd8f418c15",
+      "size": 2555
+    },
+    "agent-tracing-otel:deploy/collector/collector.yaml": {
+      "sha256": "cdc31df767cc097968934a660cb24a8c01c9044c26476273d4904d9595c2dfd1",
+      "size": 2222
+    },
+    "agent-tracing-otel:deploy/prometheus/rules.yaml": {
+      "sha256": "a7af8fff658bd602c76f2a592e0e8892094a0c6cc72df71c8e09e68f5e742682",
+      "size": 3228
+    },
+    "agent-tracing-otel:deploy/prometheus/rules_test.yaml": {
+      "sha256": "3d6299f9805430b41fc40ab54992cb0064f62f84af49fb6eb49f2b7de392be6f",
+      "size": 3114
+    },
+    "agent-tracing-otel:docs/adr/0004-content-off-by-default.md": {
+      "sha256": "512963586037d6640fc5bf1ee3c5abd0b64e9c9720480bd35ccce9957758324f",
+      "size": 907
+    },
+    "ai-platform-reference-architecture:catalog/platform.toml": {
+      "sha256": "47eb548501a89ad001844ca0475ed88b0405f18106770f6d0d810a717dd5cdb8",
+      "size": 20885
+    },
+    "ai-platform-reference-architecture:docs/adr/0004-single-gateway-multi-provider.md": {
+      "sha256": "d29770676b4af0c67c4bf48838877a7227103dc58c4bfe8e7e809109f270a417",
+      "size": 1319
+    },
+    "ai-platform-reference-architecture:docs/architecture.md": {
+      "sha256": "88de9e5efc3fca068eafee568fb3c534d20cbecd9eed72215f96fe60c10dc279",
+      "size": 4472
+    },
+    "ai-platform-reference-architecture:docs/generated/components.md": {
+      "sha256": "1312c13fb9ae7f62f10912554461920a01f0211f02f032d692647f6307857c78",
+      "size": 5346
+    },
+    "ai-platform-reference-architecture:docs/generated/ownership.md": {
+      "sha256": "b452814f5070b7158168e0df2828b41690d952fd05e740754e3940862cde8c17",
+      "size": 1673
+    },
+    "ai-platform-reference-architecture:docs/generated/slo-register.md": {
+      "sha256": "fb173bd982662ab6f915a7cb89924b5e7be08320338cc8a5622423e5ae869279",
+      "size": 2477
+    },
+    "ai-platform-reference-architecture:docs/operating-model.md": {
+      "sha256": "63fcaa839e92d63a036d8ea7b3bb76d3ccaf673b585b3cfca3c5762e4d2db63c",
+      "size": 2922
+    },
+    "ai-platform-reference-architecture:docs/risk-register.md": {
+      "sha256": "18266720d33e969a5815018358588e4290229886df3bd84a1e703eb270adb34b",
+      "size": 3233
+    },
+    "ai-platform-reference-architecture:docs/runbooks/agent-runtime.md": {
+      "sha256": "d025fc47d5c063af32f5f9d9bfaa4a6f28ef3d3af7ea795f3b1f093aefd4efcd",
+      "size": 1668
+    },
+    "ai-platform-reference-architecture:src/archfit/rules.py": {
+      "sha256": "9592c42d4904753f381704f61c44cf596d70df7445587ba79936ef1786aa21ce",
+      "size": 12103
+    },
+    "azure-ai-landing-zone:docs/threat-model.md": {
+      "sha256": "b9070fcb393e40d6de60801fa530b7e7e57cd63a420bd3f4af733754d0508c7c",
+      "size": 3278
+    },
+    "azure-ai-landing-zone:src/tfpolicy/rules.py": {
+      "sha256": "391afcb6c29761b4c808426813f2971f695108ba6c9c3f25fe1d80cbe3309990",
+      "size": 24214
+    },
+    "claude-agent-reference:docs/adr/0002-hard-budgets-and-bounded-loops.md": {
+      "sha256": "a1484bb84d5d94073eee595243ad66e55e844dc21ba3a5ee6fc6b48c44df6fa7",
+      "size": 1293
+    },
+    "claude-agent-reference:docs/adr/0003-approval-gated-writes.md": {
+      "sha256": "eb6fece979e13724b18701634a3d105671bdb5ba1a716005b4d165ec871f7624",
+      "size": 1469
+    },
+    "claude-agent-reference:docs/adr/0005-audit-log-design.md": {
+      "sha256": "157d28dd3d39aa52f4ab3e996cf68b0b553fcebcf71f9608a77dbd0f627d9398",
+      "size": 1379
+    },
+    "claude-agent-reference:docs/architecture.md": {
+      "sha256": "bcf735b80145527fcd298bde406f7c53a3f282ea1dd55bf147388b90de17437e",
+      "size": 3523
+    },
+    "claude-agent-reference:docs/evals.md": {
+      "sha256": "a14d214f01bf8364fa86f584016ac2bdf6ca4fc8b6713da72464b92598b7a7b7",
+      "size": 2694
+    },
+    "claude-agent-reference:docs/operations.md": {
+      "sha256": "b35d899697ec25f5bd1429bbdf0941ca0dc49c592dde742c4a3b92aa0619595e",
+      "size": 2628
+    },
+    "claude-agent-reference:docs/threat-model.md": {
+      "sha256": "1db17b3db02b30bb92a248b3ad9410187d6385b548dfed0c7fcf9917a584ebcc",
+      "size": 3601
+    },
+    "claude-agent-reference:evals/scenarios/08-injection-in-document-cannot-refund.json": {
+      "sha256": "0a77f5d3a02ea21cccafa18a3e9260ffa60fcdd4b8a77fd00f37cb73dc115754",
+      "size": 1026
+    },
+    "claude-agent-reference:evals/scenarios/26-audit-redaction.json": {
+      "sha256": "1d361bd47f55fc45f8cc90511db7431fced85e557f547e5bc121631f462ae4d5",
+      "size": 533
+    },
+    "claude-agent-reference:src/claude_agent/audit.py": {
+      "sha256": "7af3b50823c08dec701b2a409209afe319e23bc9129f236be9300a0258efe290",
+      "size": 6288
+    },
+    "claude-agent-reference:src/claude_agent/budget.py": {
+      "sha256": "ac7e6123a5af6958668da1d2411ba4d01028c690781a8b64ffa7f24d9dfcf34f",
+      "size": 2371
+    },
+    "claude-agent-reference:tests/test_audit.py": {
+      "sha256": "c8aa9d993de966ba46458dd548d54d1fcd746989a0e2f760b403b969667b04d0",
+      "size": 3598
+    },
+    "databricks-medallion-lakehouse:docs/adr/0003-expectations-and-quarantine.md": {
+      "sha256": "d68832fad863a94c17550d250bf65b629dc0c51408915c143a1c90129f179c67",
+      "size": 1404
+    },
+    "databricks-medallion-lakehouse:docs/generated/classification.md": {
+      "sha256": "60c3aa12317153331d636824c03228fd943211d64522cf92fc304d1cba86d715",
+      "size": 1195
+    },
+    "databricks-medallion-lakehouse:docs/generated/lineage.md": {
+      "sha256": "1f35b1d909159e3258b7a3a736ad63c01f73e5f66c4110ce54fea803c9f340e0",
+      "size": 1159
+    },
+    "databricks-medallion-lakehouse:docs/generated/quality.md": {
+      "sha256": "cf05a1a91a8255305ccfb616726a876b62a940756ba770350a1d2ee173e64f9d",
+      "size": 2082
+    },
+    "databricks-medallion-lakehouse:docs/oracle-assumptions.md": {
+      "sha256": "8e4e0f2b6aad688f87069241bd40abd0c8fa001aaa0725d968b8f8ec5cebd3f1",
+      "size": 3484
+    },
+    "databricks-medallion-lakehouse:src/medallion/oracle.py": {
+      "sha256": "0b3df34764d33168a35f94a313ec26b9bccd72830fb391cdb5deedaf32fe7ae8",
+      "size": 16121
+    },
+    "databricks-medallion-lakehouse:src/medallion/policy.py": {
+      "sha256": "16798449e7826d221d77dc81dc5f0333391dc0c13e70385c549537911fe77158",
+      "size": 23824
+    },
+    "databricks-medallion-lakehouse:src/medallion/spec.py": {
+      "sha256": "96c9a759919ebc87152341f050ba7eadb6114405a12e83a053e23df6852a8da8",
+      "size": 11002
+    },
+    "governed-data-agents:docs/adr/0002-enforce-in-the-database.md": {
+      "sha256": "cb187c4ca44d3c2069ecd469b2b33bd92a6cd53bec635a7cd3e147a2405418f1",
+      "size": 836
+    },
+    "governed-data-agents:src/gda/audit.py": {
+      "sha256": "0b5933b284bbe201b2a56e4b1ac53b8eafd0ec95201b8522a0879a1610789c53",
+      "size": 2469
+    },
+    "human-in-the-loop-inbox:docs/guarantees.md": {
+      "sha256": "d861b31e20ab4f7e005df0ffe69c775ea84ed9c11ae63117b69dceb55c6cf9b0",
+      "size": 2974
+    },
+    "human-in-the-loop-inbox:policy.yaml": {
+      "sha256": "60627ae1c46ce2863f40783b346678402236ac43ce9aff6b364a8b8e86dea293",
+      "size": 1658
+    },
+    "human-in-the-loop-inbox:src/hitl/schema.sql": {
+      "sha256": "875cba841f9f6fad73c7ccad7598851db93fbe6bebe73e64b67f1eeacf4f5669",
+      "size": 3807
+    }
+  },
+  "generated": "2026-11-13",
+  "schema": 1
+}

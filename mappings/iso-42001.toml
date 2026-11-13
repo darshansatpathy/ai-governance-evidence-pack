@@ -1,0 +1,375 @@
+# Mappings for iso-42001. Every control has exactly one mapping. Statuses are conservative; see docs/method.md.
+framework = "iso-42001"
+
+[[mapping]]
+control = "ISO42001-A.2.2"
+status = "organisational"
+reviewed = 2026-11-13
+rationale = "An AI policy is a management document. Technical policy-as-code exists in several repositories but there is no organisational AI policy here."
+owner = "Head of AI governance"
+next_step = "Draft the AI policy, have management approve it and communicate it."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/operating-model.md"
+kind = "doc"
+contains = "Responsibilities (RACI)"
+shows = "A responsibility matrix, change classes, an onboarding path for new use cases, a governance cadence and a waiver process."
+
+[[mapping]]
+control = "ISO42001-A.3.2"
+status = "organisational"
+reviewed = 2026-11-13
+rationale = "A responsibility matrix exists for the reference platform; allocation for an organisation is a management decision."
+owner = "Head of AI governance"
+next_step = "Allocate AI roles to named positions and record them in the management system."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/operating-model.md"
+kind = "doc"
+contains = "Responsibilities (RACI)"
+shows = "A responsibility matrix, change classes, an onboarding path for new use cases, a governance cadence and a waiver process."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/generated/ownership.md"
+kind = "doc"
+contains = "| Team | Responsibility | Contact | Components |"
+shows = "Generated register of each owning team with its responsibility, contact and components, drawn from the platform catalog."
+
+[[mapping]]
+control = "ISO42001-A.4.2"
+status = "partial"
+reviewed = 2026-11-13
+rationale = "The platform catalog records components, data classes and dependencies as checked data, and the lakehouse documents its data and tooling."
+limits = "Computing, human and training-data resources for a deployed system are not recorded."
+owner = "Platform owner"
+next_step = "Extend the catalog entry for each deployed system to cover people, compute and data resources."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "catalog/platform.toml"
+kind = "config"
+contains = "DESIGN TARGETS"
+shows = "The platform's components, owners, trust zones, data classes, dependencies and design targets as checked data."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/generated/components.md"
+kind = "doc"
+contains = "27 components in 6 layers"
+shows = "Generated inventory of 27 components with layer, tier, owner, maximum data class, availability target, recovery time and purpose."
+
+[[mapping.evidence]]
+repo = "databricks-medallion-lakehouse"
+path = "docs/generated/lineage.md"
+kind = "doc"
+contains = "# Lineage"
+shows = "Generated lineage from landing files through bronze and silver to gold."
+
+[[mapping]]
+control = "ISO42001-A.5.2"
+status = "organisational"
+reviewed = 2026-11-13
+rationale = "An impact assessment process is a management procedure with triggers, templates and sign-off. None exists here."
+owner = "Head of AI governance"
+next_step = "Define the process, the triggers (including substantial modification) and the record format."
+
+[[mapping]]
+control = "ISO42001-A.6.2.4"
+status = "implemented"
+reviewed = 2026-11-13
+rationale = "Verification and validation are automated: hermetic scenarios for the harness, an evaluation gate with stored baseline and declared tolerances, an attack corpus for the gateway, and policy checks for infrastructure and data."
+limits = "Criteria are defined for the reference systems. A deployed system needs its own acceptance criteria and test evidence."
+owner = "Model risk lead"
+next_step = "Define acceptance criteria for the deployed system and make the gate a required check."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "docs/evals.md"
+kind = "doc"
+contains = "Do the scenarios fail when they should?"
+shows = "27 hermetic scenarios test the harness, and the documented mutation check disabled each safety mechanism to prove the suite fails when it should."
+
+[[mapping.evidence]]
+repo = "agent-eval-harness"
+path = "docs/adr/0004-gate-rules.md"
+kind = "doc"
+contains = "McNemar"
+shows = "A candidate agent is blocked on any critical failure, metric regression beyond tolerance, latency rise, or a significant excess of regressions over fixes."
+
+[[mapping.evidence]]
+repo = "agent-eval-harness"
+path = "gate.yaml"
+kind = "config"
+contains = "min_judge_kappa"
+shows = "Gate tolerances and the minimum judge agreement are declared in a reviewed file."
+
+[[mapping.evidence]]
+repo = "agent-guardrails-gateway"
+path = "docs/adr/0006-attack-corpus-in-ci.md"
+kind = "doc"
+contains = "attack corpus"
+shows = "A corpus of attack and benign scenarios runs against the real gateway in CI so a policy change cannot quietly reopen a hole."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "src/archfit/rules.py"
+kind = "code"
+contains = "FIT002"
+shows = "Architecture fitness functions that fail a design change when a component breaks a stated rule."
+
+[[mapping]]
+control = "ISO42001-A.6.2.6"
+status = "partial"
+reviewed = 2026-11-13
+rationale = "Operation and monitoring are supported by alert rules with tests, availability registers, runbooks and retry and budget policies."
+limits = "Repair, update and support processes are documented per component, not for a deployed system."
+owner = "Service owner"
+next_step = "Record operation, update and support arrangements for the deployed system."
+
+[[mapping.evidence]]
+repo = "agent-tracing-otel"
+path = "deploy/prometheus/rules.yaml"
+kind = "config"
+contains = "AgentSuccessRatioLow"
+shows = "Alert rules for cost per completed task, success ratio, model-call errors and unpriced models."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/generated/slo-register.md"
+kind = "doc"
+contains = "Availability register"
+shows = "A generated availability register per component: tier, target and the ceiling implied by hard dependencies; targets are design values, not measurements."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/runbooks/agent-runtime.md"
+kind = "doc"
+contains = "## Symptoms"
+shows = "A runbook for the agent runtime with ownership, recovery targets, symptoms, first checks, mitigations and after-incident steps."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "docs/operations.md"
+kind = "doc"
+contains = "What to monitor"
+shows = "Operations guidance for the agent harness: configuration, retry policy, what to monitor."
+
+[[mapping]]
+control = "ISO42001-A.6.2.7"
+status = "partial"
+reviewed = 2026-11-13
+rationale = "Technical documentation exists as architecture documents, decision records, threat models and generated registers."
+limits = "Documentation describes reference designs, and is not provided to named interested parties."
+owner = "Product owner of the deployed system"
+next_step = "Decide who needs the documentation and how it is provided and kept current."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/architecture.md"
+kind = "doc"
+contains = "One way in, one way out"
+shows = "Architecture principles of the governed platform, including one gateway for all model traffic, with the design kept as data and checked by fitness functions."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "docs/architecture.md"
+kind = "doc"
+contains = "The package is small enough to read in one sitting"
+shows = "Architecture of the agent harness: turn loop, client with a same-origin check, and a tool registry that validates, approves, runs, truncates and wraps."
+
+[[mapping.evidence]]
+repo = "agent-eval-harness"
+path = "docs/eval-report.md"
+kind = "doc"
+contains = "The gate on five candidate changes"
+shows = "Shows the gate catching five deliberately degraded agent variants, including one that disables the injection guard."
+
+[[mapping]]
+control = "ISO42001-A.6.2.8"
+status = "implemented"
+reviewed = 2026-11-13
+rationale = "Event logging is implemented with tamper evidence in the agent harness, the approval service, the gateway and the data agent."
+limits = "Which stages are logged and for how long are deployment decisions. Tail truncation is not detectable from a file alone."
+owner = "Platform security lead"
+next_step = "Set logging stages and retention for the deployed system and anchor the chain head externally."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "src/claude_agent/audit.py"
+kind = "code"
+contains = "def verify_chain"
+shows = "Audit events are hash-chained and a verifier detects edited, removed or reordered lines; content is fingerprinted and redacted before hashing."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "tests/test_audit.py"
+kind = "test"
+contains = "test_removed_or_reordered_lines_are_detected"
+shows = "Tests that tampering, removal and reordering of audit lines are detected, and that secrets and card numbers are redacted."
+
+[[mapping.evidence]]
+repo = "human-in-the-loop-inbox"
+path = "src/hitl/schema.sql"
+kind = "code"
+contains = "Tamper-evident log"
+shows = "The approval service keeps an event log in which each record's hash covers the previous record."
+
+[[mapping.evidence]]
+repo = "agent-guardrails-gateway"
+path = "docs/adr/0005-hash-chained-audit-log.md"
+kind = "doc"
+contains = "Keyed hash chain for the audit log"
+shows = "Gateway decisions are written to an HMAC-chained log whose verification names the first bad record."
+
+[[mapping.evidence]]
+repo = "governed-data-agents"
+path = "src/gda/audit.py"
+kind = "code"
+contains = "audit.queries"
+shows = "Every question, plan, outcome and row count is appended to an audit table by the service's own login."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "docs/adr/0005-audit-log-design.md"
+kind = "doc"
+contains = "Editing, removing or reordering a line breaks verification"
+shows = "Explains the audit log design and states that deleting the tail of the file is not detectable from the file alone."
+
+[[mapping]]
+control = "ISO42001-A.7.4"
+status = "partial"
+reviewed = 2026-11-13
+rationale = "Data quality is expressed as declared expectations with warn, drop or fail actions, a quarantine table that names failed rules, and a generated quality register."
+limits = "The generated Spark SQL has not been run on Databricks, and the expectations cover pipeline data, not data used to train or evaluate a model."
+owner = "Head of data governance"
+next_step = "Run the pipeline in a workspace, confirm expectation behaviour, and define quality criteria for model datasets."
+
+[[mapping.evidence]]
+repo = "databricks-medallion-lakehouse"
+path = "docs/generated/quality.md"
+kind = "doc"
+contains = "# Data quality expectations"
+shows = "Generated register of every expectation with its action (warn, drop or fail)."
+
+[[mapping.evidence]]
+repo = "databricks-medallion-lakehouse"
+path = "docs/adr/0003-expectations-and-quarantine.md"
+kind = "doc"
+contains = "write it, with the names of the rules it failed"
+shows = "Rows failing a drop expectation are kept in a quarantine table with the names of the rules they failed."
+
+[[mapping.evidence]]
+repo = "databricks-medallion-lakehouse"
+path = "src/medallion/oracle.py"
+kind = "code"
+contains = "ExpectationFailure"
+shows = "A reference executor applies the expectations to sample data with hand-derived results."
+
+[[mapping]]
+control = "ISO42001-A.7.5"
+status = "partial"
+reviewed = 2026-11-13
+rationale = "Lineage is generated from the specification and bronze keeps source file and ingestion time on every row."
+limits = "Provenance of third-party and training data is not recorded, and lineage stops at the gold tables."
+owner = "Head of data governance"
+next_step = "Extend lineage to model training and evaluation datasets and record third-party sources."
+
+[[mapping.evidence]]
+repo = "databricks-medallion-lakehouse"
+path = "docs/generated/lineage.md"
+kind = "doc"
+contains = "# Lineage"
+shows = "Generated lineage from landing files through bronze and silver to gold."
+
+[[mapping.evidence]]
+repo = "databricks-medallion-lakehouse"
+path = "src/medallion/spec.py"
+kind = "code"
+contains = "BRONZE_METADATA"
+shows = "Bronze tables carry source file, source modified time, ingestion time and rescued data columns."
+
+[[mapping]]
+control = "ISO42001-A.8.2"
+status = "partial"
+reviewed = 2026-11-13
+rationale = "Repositories document how to run, what is verified and what is not, which helps users understand them."
+limits = "This documentation is for developers, not end users of a deployed system."
+owner = "Product owner of the deployed system"
+next_step = "Identify user groups for the deployed system and write information for each."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "docs/threat-model.md"
+kind = "doc"
+contains = "What this does not solve"
+shows = "Twelve threats each with a control and the test that covers it, plus an explicit list of what the harness does not solve."
+
+[[mapping.evidence]]
+repo = "databricks-medallion-lakehouse"
+path = "docs/oracle-assumptions.md"
+kind = "doc"
+contains = "It is a model"
+shows = "States what the reference executor assumes about Databricks and what is not modelled."
+
+[[mapping]]
+control = "ISO42001-A.8.4"
+status = "organisational"
+reviewed = 2026-11-13
+rationale = "Deciding how and when incidents are communicated to interested parties is a management decision. Runbooks provide a structure for response."
+owner = "Legal and compliance"
+next_step = "Document the incident communication plan, audiences and timing."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/runbooks/agent-runtime.md"
+kind = "doc"
+contains = "## Symptoms"
+shows = "A runbook for the agent runtime with ownership, recovery targets, symptoms, first checks, mitigations and after-incident steps."
+
+[[mapping]]
+control = "ISO42001-A.9.2"
+status = "organisational"
+reviewed = 2026-11-13
+rationale = "Responsible use is defined by organisational processes. Technical enforcement exists in approval policy and default-deny tool policy, which supports those processes."
+owner = "Head of AI governance"
+next_step = "Define responsible-use processes, then express the enforceable parts as policy files like these."
+
+[[mapping.evidence]]
+repo = "human-in-the-loop-inbox"
+path = "policy.yaml"
+kind = "config"
+contains = "never-delete-production"
+shows = "Which agent actions need a human is declared as data: read-only actions auto-approve, production deletes are denied, refunds are tiered by amount."
+
+[[mapping.evidence]]
+repo = "agent-guardrails-gateway"
+path = "policies/support-agent.yaml"
+kind = "config"
+contains = "Anything not listed here is denied."
+shows = "A default-deny tool policy with risk levels, untrusted-output and egress markers, and a maximum grant lifetime."
+
+[[mapping]]
+control = "ISO42001-A.10.3"
+status = "designed"
+reviewed = 2026-11-13
+rationale = "The platform design routes model traffic through one gateway with more than one provider behind it, and the risk register names provider outage and terms changes as risks with an owner."
+limits = "A design decision and a risk entry. No supplier assessment process, contract controls or supplier review records."
+owner = "Vendor management"
+next_step = "Define supplier assessment criteria and keep a record for each model and data provider."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/adr/0004-single-gateway-multi-provider.md"
+kind = "doc"
+contains = "authenticates callers, applies per-caller"
+shows = "Decision to route all model traffic through one gateway with more than one provider behind it."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/risk-register.md"
+kind = "doc"
+contains = "Prompt injection causes a harmful action"
+shows = "A risk register with likelihood, impact, mitigations tied to ADRs and components, early indicators and an owning team."

@@ -1,0 +1,112 @@
+[framework]
+id = "eu-ai-act"
+name = "EU AI Act"
+citation = "Regulation (EU) 2024/1689, as amended by Regulation (EU) 2026/1744"
+source = "https://eur-lex.europa.eu/eli/reg/2024/1689/oj"
+ref_pattern = "Article \\d+"
+checked = 2026-11-13
+note = "Article numbers and subjects only; each summary is a paraphrase written for this pack, not the legal text. High-risk obligations apply from 2 December 2027 (Annex III) and 2 August 2028 (Annex I) after the Digital Omnibus on AI; see docs/regulatory-status.md. Whether any system is high-risk is a legal classification this pack does not make."
+
+[[controls]]
+id = "EUAIA-04"
+ref = "Article 4"
+title = "AI literacy"
+summary = "Providers and deployers take measures to support the AI literacy of the people who operate or use AI systems on their behalf, in proportion to their role and context."
+applies_to = "both"
+kind = "organisational"
+
+[[controls]]
+id = "EUAIA-09"
+ref = "Article 9"
+title = "Risk management system"
+summary = "A continuous, documented risk management process runs across the life of a high-risk system: identify foreseeable risks and misuse, evaluate them, adopt measures, test, and review residual risk."
+applies_to = "provider"
+kind = "mixed"
+
+[[controls]]
+id = "EUAIA-10"
+ref = "Article 10"
+title = "Data and data governance"
+summary = "Training, validation and testing data for high-risk systems are governed: design choices, provenance, preparation, suitability, examination for bias and handling of personal data."
+applies_to = "provider"
+kind = "mixed"
+
+[[controls]]
+id = "EUAIA-11"
+ref = "Article 11"
+title = "Technical documentation"
+summary = "Technical documentation, kept current, shows that the system meets the requirements and gives authorities what they need to assess it (content listed in Annex IV)."
+applies_to = "provider"
+kind = "mixed"
+
+[[controls]]
+id = "EUAIA-12"
+ref = "Article 12"
+title = "Record-keeping"
+summary = "High-risk systems can automatically record events over their lifetime so that situations of risk, substantial modifications and operation can be traced."
+applies_to = "provider"
+kind = "technical"
+
+[[controls]]
+id = "EUAIA-13"
+ref = "Article 13"
+title = "Transparency and information to deployers"
+summary = "Systems are transparent enough for deployers to interpret outputs and use them properly, and come with instructions covering purpose, accuracy, known limits and oversight measures."
+applies_to = "provider"
+kind = "mixed"
+
+[[controls]]
+id = "EUAIA-14"
+ref = "Article 14"
+title = "Human oversight"
+summary = "Systems are designed so people can effectively oversee them while in use: understand capacities and limits, notice anomalies, interpret outputs, decide not to use or override, and stop the system."
+applies_to = "provider"
+kind = "mixed"
+
+[[controls]]
+id = "EUAIA-15"
+ref = "Article 15"
+title = "Accuracy, robustness and cybersecurity"
+summary = "Systems reach and declare an appropriate level of accuracy, are resilient to errors and inconsistencies, and resist attempts by third parties to alter their use or performance."
+applies_to = "provider"
+kind = "technical"
+
+[[controls]]
+id = "EUAIA-17"
+ref = "Article 17"
+title = "Quality management system"
+summary = "Providers run a documented quality management system covering compliance strategy, design and development control, testing, data management, risk management, monitoring and incident handling."
+applies_to = "provider"
+kind = "organisational"
+
+[[controls]]
+id = "EUAIA-26"
+ref = "Article 26"
+title = "Obligations of deployers"
+summary = "Deployers use systems according to instructions, assign competent human oversight, ensure relevant input data, monitor operation, keep the logs they control and inform affected people where required."
+applies_to = "deployer"
+kind = "mixed"
+
+[[controls]]
+id = "EUAIA-50"
+ref = "Article 50"
+title = "Transparency obligations for certain systems"
+summary = "People are told when they are interacting with an AI system, and certain synthetic or manipulated content is marked or disclosed, unless obvious from the context."
+applies_to = "both"
+kind = "mixed"
+
+[[controls]]
+id = "EUAIA-72"
+ref = "Article 72"
+title = "Post-market monitoring"
+summary = "Providers of high-risk systems collect and analyse data on performance over the system's life, under a documented monitoring plan, to keep checking continued conformity."
+applies_to = "provider"
+kind = "mixed"
+
+[[controls]]
+id = "EUAIA-73"
+ref = "Article 73"
+title = "Reporting of serious incidents"
+summary = "Providers of high-risk systems report serious incidents to market surveillance authorities within set deadlines and investigate them."
+applies_to = "provider"
+kind = "organisational"

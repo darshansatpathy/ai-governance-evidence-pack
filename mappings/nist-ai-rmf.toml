@@ -1,0 +1,470 @@
+# Mappings for nist-ai-rmf. Every control has exactly one mapping. Statuses are conservative; see docs/method.md.
+framework = "nist-ai-rmf"
+
+[[mapping]]
+control = "NIST-GV-1.4"
+status = "partial"
+reviewed = 2026-11-13
+rationale = "Policies are expressed as checked code in several places: architecture fitness functions, Terraform policy rules, lakehouse lint rules, tool-boundary policy files and approval policy data, each with tests."
+limits = "Policy-as-code covers technical controls for these reference systems. There is no organisation-level AI risk policy or statement of risk priorities."
+owner = "AI governance lead"
+next_step = "Write the organisation-level AI risk policy and link each technical rule set to it."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "src/archfit/rules.py"
+kind = "code"
+contains = "FIT002"
+shows = "Architecture fitness functions that fail a design change when a component breaks a stated rule."
+
+[[mapping.evidence]]
+repo = "azure-ai-landing-zone"
+path = "src/tfpolicy/rules.py"
+kind = "code"
+contains = "TFP016"
+shows = "A policy rule fails Terraform that deploys a model without naming a content filter policy; neighbouring rules require private access and keyless authentication."
+
+[[mapping.evidence]]
+repo = "databricks-medallion-lakehouse"
+path = "src/medallion/policy.py"
+kind = "code"
+contains = "MED007"
+shows = "A lint rule fails the build when a personal-data column lacks a mask or a derived column copies the raw value."
+
+[[mapping.evidence]]
+repo = "agent-guardrails-gateway"
+path = "policies/support-agent.yaml"
+kind = "config"
+contains = "Anything not listed here is denied."
+shows = "A default-deny tool policy with risk levels, untrusted-output and egress markers, and a maximum grant lifetime."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/operating-model.md"
+kind = "doc"
+contains = "Responsibilities (RACI)"
+shows = "A responsibility matrix, change classes, an onboarding path for new use cases, a governance cadence and a waiver process."
+
+[[mapping]]
+control = "NIST-GV-1.6"
+status = "partial"
+reviewed = 2026-11-13
+rationale = "The platform catalog is a checked inventory of components with owners, trust zones and data classes, and this pack's system record lists a system with its components."
+limits = "The inventory covers reference components, not an organisation's AI systems, and is not tied to a risk-based resourcing decision."
+owner = "AI governance lead"
+next_step = "Create an inventory of deployed AI systems with owner, purpose, risk tier and status, and review it on a schedule."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "catalog/platform.toml"
+kind = "config"
+contains = "DESIGN TARGETS"
+shows = "The platform's components, owners, trust zones, data classes, dependencies and design targets as checked data."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/generated/components.md"
+kind = "doc"
+contains = "27 components in 6 layers"
+shows = "Generated inventory of 27 components with layer, tier, owner, maximum data class, availability target, recovery time and purpose."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/generated/ownership.md"
+kind = "doc"
+contains = "| Team | Responsibility | Contact | Components |"
+shows = "Generated register of each owning team with its responsibility, contact and components, drawn from the platform catalog."
+
+[[mapping]]
+control = "NIST-GV-2.1"
+status = "designed"
+reviewed = 2026-11-13
+rationale = "The platform operating model sets out a responsibility matrix and generated ownership register for the reference platform."
+limits = "Roles are defined for a reference platform. Nothing shows they are clear to people across an organisation."
+owner = "AI governance lead"
+next_step = "Confirm the matrix with the real teams, publish it and review it when teams change."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/operating-model.md"
+kind = "doc"
+contains = "Responsibilities (RACI)"
+shows = "A responsibility matrix, change classes, an onboarding path for new use cases, a governance cadence and a waiver process."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/generated/ownership.md"
+kind = "doc"
+contains = "| Team | Responsibility | Contact | Components |"
+shows = "Generated register of each owning team with its responsibility, contact and components, drawn from the platform catalog."
+
+[[mapping]]
+control = "NIST-MP-1.1"
+status = "partial"
+reviewed = 2026-11-13
+rationale = "Each reference system states its purpose and boundaries, and the system record in this pack states intended purpose, roles and limitations."
+limits = "Context-specific laws, norms and prospective settings of use are not analysed for any deployed system."
+owner = "Product owner of the deployed system"
+next_step = "For each deployed system, document purpose, users, settings of use and the laws that apply."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "docs/architecture.md"
+kind = "doc"
+contains = "The package is small enough to read in one sitting"
+shows = "Architecture of the agent harness: turn loop, client with a same-origin check, and a tool registry that validates, approves, runs, truncates and wraps."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/architecture.md"
+kind = "doc"
+contains = "One way in, one way out"
+shows = "Architecture principles of the governed platform, including one gateway for all model traffic, with the design kept as data and checked by fitness functions."
+
+[[mapping]]
+control = "NIST-MP-3.5"
+status = "partial"
+reviewed = 2026-11-13
+rationale = "Oversight is defined as data: a policy file says which actions need whom, and the approval service enforces separation of duties, quorum and expiry with a test per guarantee."
+limits = "The processes are defined and tested, but not assessed for effectiveness: approval times, override rates and reviewer workload are not measured."
+owner = "Product owner of the deployed system"
+next_step = "Measure approval outcomes in production and review the policy against them every quarter."
+
+[[mapping.evidence]]
+repo = "human-in-the-loop-inbox"
+path = "policy.yaml"
+kind = "config"
+contains = "never-delete-production"
+shows = "Which agent actions need a human is declared as data: read-only actions auto-approve, production deletes are denied, refunds are tiered by amount."
+
+[[mapping.evidence]]
+repo = "human-in-the-loop-inbox"
+path = "docs/guarantees.md"
+kind = "doc"
+contains = "The person an agent acts for cannot approve it"
+shows = "Lists each approval guarantee (arguments-bound grants, single use, separation of duties, quorum, expiry) with the test that holds it."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "docs/adr/0003-approval-gated-writes.md"
+kind = "doc"
+contains = "default approver denies"
+shows = "State-changing tools require approval and the default approver denies, so a model fooled by injected text still cannot act."
+
+[[mapping]]
+control = "NIST-MS-2.1"
+status = "implemented"
+reviewed = 2026-11-13
+rationale = "The evaluation harness keeps a reviewed golden set, deterministic graders, a calibrated judge and a gate configuration in version control, and documents the results of five candidate changes."
+limits = "The golden set and knowledge base are for an invented product; they show the method, not the performance of a real system."
+owner = "Model risk lead"
+next_step = "Replace the sample set with cases drawn from the deployed system's real tasks and review it monthly."
+
+[[mapping.evidence]]
+repo = "agent-eval-harness"
+path = "docs/adr/0004-gate-rules.md"
+kind = "doc"
+contains = "McNemar"
+shows = "A candidate agent is blocked on any critical failure, metric regression beyond tolerance, latency rise, or a significant excess of regressions over fixes."
+
+[[mapping.evidence]]
+repo = "agent-eval-harness"
+path = "gate.yaml"
+kind = "config"
+contains = "min_judge_kappa"
+shows = "Gate tolerances and the minimum judge agreement are declared in a reviewed file."
+
+[[mapping.evidence]]
+repo = "agent-eval-harness"
+path = "docs/eval-report.md"
+kind = "doc"
+contains = "The gate on five candidate changes"
+shows = "Shows the gate catching five deliberately degraded agent variants, including one that disables the injection guard."
+
+[[mapping.evidence]]
+repo = "agent-eval-harness"
+path = "judge-calibration.json"
+kind = "config"
+contains = "\"kappa\":"
+shows = "Records how well the automated judge agrees with labelled statements (kappa, accuracy, detection by error type)."
+
+[[mapping]]
+control = "NIST-MS-2.5"
+status = "partial"
+reviewed = 2026-11-13
+rationale = "The gate shows how to demonstrate and monitor validity: stored baseline, tolerances, significance test, and a judge whose agreement with labels is measured."
+limits = "Evidence is for a sample agent on synthetic data. Generalisation limits of a deployed model are not documented."
+owner = "Model risk lead"
+next_step = "Run the gate on the deployed system and record conditions under which results stop holding."
+
+[[mapping.evidence]]
+repo = "agent-eval-harness"
+path = "docs/adr/0004-gate-rules.md"
+kind = "doc"
+contains = "McNemar"
+shows = "A candidate agent is blocked on any critical failure, metric regression beyond tolerance, latency rise, or a significant excess of regressions over fixes."
+
+[[mapping.evidence]]
+repo = "agent-eval-harness"
+path = "judge-calibration.json"
+kind = "config"
+contains = "\"kappa\":"
+shows = "Records how well the automated judge agrees with labelled statements (kappa, accuracy, detection by error type)."
+
+[[mapping.evidence]]
+repo = "agent-eval-harness"
+path = "docs/eval-report.md"
+kind = "doc"
+contains = "The gate on five candidate changes"
+shows = "Shows the gate catching five deliberately degraded agent variants, including one that disables the injection guard."
+
+[[mapping]]
+control = "NIST-MS-2.7"
+status = "implemented"
+reviewed = 2026-11-13
+rationale = "The harness documents twelve threats with controls and tests, the gateway has a threat model and an attack corpus in CI, and the landing zone policy checker enforces private access and keyless authentication on the infrastructure."
+limits = "Self-assessment by the author. No independent penetration test or red-team exercise. Compromise of keys or hosts is out of scope in the gateway's model."
+owner = "Platform security lead"
+next_step = "Commission an independent test of the deployed system and add its findings to the attack corpus."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "docs/threat-model.md"
+kind = "doc"
+contains = "What this does not solve"
+shows = "Twelve threats each with a control and the test that covers it, plus an explicit list of what the harness does not solve."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "docs/evals.md"
+kind = "doc"
+contains = "Do the scenarios fail when they should?"
+shows = "27 hermetic scenarios test the harness, and the documented mutation check disabled each safety mechanism to prove the suite fails when it should."
+
+[[mapping.evidence]]
+repo = "agent-guardrails-gateway"
+path = "docs/threat-model.md"
+kind = "doc"
+contains = "Approval laundering"
+shows = "Threat model for the tool boundary with per-threat mitigation and residual risk, including approval laundering and replay."
+
+[[mapping.evidence]]
+repo = "agent-guardrails-gateway"
+path = "docs/adr/0006-attack-corpus-in-ci.md"
+kind = "doc"
+contains = "attack corpus"
+shows = "A corpus of attack and benign scenarios runs against the real gateway in CI so a policy change cannot quietly reopen a hole."
+
+[[mapping.evidence]]
+repo = "azure-ai-landing-zone"
+path = "src/tfpolicy/rules.py"
+kind = "code"
+contains = "TFP016"
+shows = "A policy rule fails Terraform that deploys a model without naming a content filter policy; neighbouring rules require private access and keyless authentication."
+
+[[mapping]]
+control = "NIST-MS-2.10"
+status = "partial"
+reviewed = 2026-11-13
+rationale = "Personal data is masked in the lakehouse by default, kept out of traces by default, fingerprinted and redacted in audit logs, and protected by database-level access controls in the data agent."
+limits = "These are technical controls. No privacy risk assessment (for example a data protection impact assessment) has been done for any deployed system. Masks do not protect Delta Sharing recipients."
+owner = "Data protection officer"
+next_step = "Complete a data protection impact assessment for the deployed system and link it here."
+
+[[mapping.evidence]]
+repo = "databricks-medallion-lakehouse"
+path = "docs/generated/classification.md"
+kind = "doc"
+contains = "Personal data columns and masks"
+shows = "Generated from the specification: every table's classification and owner, and which columns hold personal data and carry which mask."
+
+[[mapping.evidence]]
+repo = "databricks-medallion-lakehouse"
+path = "src/medallion/policy.py"
+kind = "code"
+contains = "MED007"
+shows = "A lint rule fails the build when a personal-data column lacks a mask or a derived column copies the raw value."
+
+[[mapping.evidence]]
+repo = "agent-tracing-otel"
+path = "docs/adr/0004-content-off-by-default.md"
+kind = "doc"
+contains = "off by default"
+shows = "Prompt and completion text is not recorded unless enabled, and the collector deletes content attributes from every span."
+
+[[mapping.evidence]]
+repo = "agent-tracing-otel"
+path = "deploy/collector/collector.yaml"
+kind = "config"
+contains = "drop_content"
+shows = "The collector pipeline includes a processor that removes message content attributes before export."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "evals/scenarios/26-audit-redaction.json"
+kind = "test"
+contains = "audit_excludes"
+shows = "A scenario asserts that an email address and an API key in the prompt never appear in the audit log."
+
+[[mapping.evidence]]
+repo = "governed-data-agents"
+path = "docs/adr/0002-enforce-in-the-database.md"
+kind = "doc"
+contains = "PostgreSQL row-level security"
+shows = "Regions are enforced by row-level security and personal data by column privileges in the database, not only in application code."
+
+[[mapping]]
+control = "NIST-MS-3.1"
+status = "partial"
+reviewed = 2026-11-13
+rationale = "The risk register names early indicators per risk and an owner, and alert rules with unit tests watch cost, success ratio and model errors in production."
+limits = "No process connects indicator breaches to risk re-scoring, and unanticipated risks are not systematically gathered."
+owner = "Model risk lead"
+next_step = "Review indicators monthly, record breaches and add an intake for emergent risks."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/risk-register.md"
+kind = "doc"
+contains = "Prompt injection causes a harmful action"
+shows = "A risk register with likelihood, impact, mitigations tied to ADRs and components, early indicators and an owning team."
+
+[[mapping.evidence]]
+repo = "agent-tracing-otel"
+path = "deploy/prometheus/rules.yaml"
+kind = "config"
+contains = "AgentSuccessRatioLow"
+shows = "Alert rules for cost per completed task, success ratio, model-call errors and unpriced models."
+
+[[mapping.evidence]]
+repo = "agent-tracing-otel"
+path = "deploy/prometheus/rules_test.yaml"
+kind = "test"
+contains = "AgentSuccessRatioLow"
+shows = "Unit tests for the alert rules."
+
+[[mapping]]
+control = "NIST-MG-1.4"
+status = "partial"
+reviewed = 2026-11-13
+rationale = "Threat models list what remains unsolved: residual risk columns in the gateway's model and an explicit 'what this does not solve' section in the harness's."
+limits = "Residual risk is described for reference components, not summed or communicated to downstream acquirers and end users of a product."
+owner = "Model risk lead"
+next_step = "Produce a residual-risk statement for the deployed system for its acquirers and users."
+
+[[mapping.evidence]]
+repo = "agent-guardrails-gateway"
+path = "docs/threat-model.md"
+kind = "doc"
+contains = "Approval laundering"
+shows = "Threat model for the tool boundary with per-threat mitigation and residual risk, including approval laundering and replay."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "docs/threat-model.md"
+kind = "doc"
+contains = "What this does not solve"
+shows = "Twelve threats each with a control and the test that covers it, plus an explicit list of what the harness does not solve."
+
+[[mapping]]
+control = "NIST-MG-2.4"
+status = "partial"
+reviewed = 2026-11-13
+rationale = "Hard budgets end runaway runs, grants expire and can be revoked, an agent can cancel its own pending requests, and production deletes are denied by policy."
+limits = "These stop a run or a request. There is no documented procedure, owner or authority for disengaging a whole deployed system, and no drill."
+owner = "Service owner"
+next_step = "Write and rehearse a disengage procedure for the deployed system and assign who may invoke it."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "src/claude_agent/budget.py"
+kind = "code"
+contains = "class BudgetTracker"
+shows = "Tracks consumption against the configured budgets and ends the run when one is exceeded."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "docs/adr/0002-hard-budgets-and-bounded-loops.md"
+kind = "doc"
+contains = "Six limits, checked before each model call"
+shows = "Six limits (turns, tool calls, tokens, cost, time, identical repeats) are checked before each model call and end the run with a recorded reason."
+
+[[mapping.evidence]]
+repo = "agent-guardrails-gateway"
+path = "policies/support-agent.yaml"
+kind = "config"
+contains = "Anything not listed here is denied."
+shows = "A default-deny tool policy with risk levels, untrusted-output and egress markers, and a maximum grant lifetime."
+
+[[mapping.evidence]]
+repo = "human-in-the-loop-inbox"
+path = "policy.yaml"
+kind = "config"
+contains = "never-delete-production"
+shows = "Which agent actions need a human is declared as data: read-only actions auto-approve, production deletes are denied, refunds are tiered by amount."
+
+[[mapping.evidence]]
+repo = "human-in-the-loop-inbox"
+path = "docs/guarantees.md"
+kind = "doc"
+contains = "The person an agent acts for cannot approve it"
+shows = "Lists each approval guarantee (arguments-bound grants, single use, separation of duties, quorum, expiry) with the test that holds it."
+
+[[mapping]]
+control = "NIST-MG-4.1"
+status = "partial"
+reviewed = 2026-11-13
+rationale = "Tracing with cost per completed task, alert rules, a regression gate, availability registers and per-component runbooks provide mechanisms for monitoring, incident response and change management."
+limits = "No monitoring plan covering user feedback, appeal and override, decommissioning and recovery as one document for a deployed system."
+owner = "Service owner"
+next_step = "Write the monitoring plan for the deployed system and include feedback, appeal, decommissioning and recovery."
+
+[[mapping.evidence]]
+repo = "agent-tracing-otel"
+path = "deploy/prometheus/rules.yaml"
+kind = "config"
+contains = "AgentSuccessRatioLow"
+shows = "Alert rules for cost per completed task, success ratio, model-call errors and unpriced models."
+
+[[mapping.evidence]]
+repo = "agent-eval-harness"
+path = "docs/adr/0004-gate-rules.md"
+kind = "doc"
+contains = "McNemar"
+shows = "A candidate agent is blocked on any critical failure, metric regression beyond tolerance, latency rise, or a significant excess of regressions over fixes."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/generated/slo-register.md"
+kind = "doc"
+contains = "Availability register"
+shows = "A generated availability register per component: tier, target and the ceiling implied by hard dependencies; targets are design values, not measurements."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/runbooks/agent-runtime.md"
+kind = "doc"
+contains = "## Symptoms"
+shows = "A runbook for the agent runtime with ownership, recovery targets, symptoms, first checks, mitigations and after-incident steps."
+
+[[mapping]]
+control = "NIST-MG-4.3"
+status = "organisational"
+reviewed = 2026-11-13
+rationale = "Communicating incidents to affected parties is an organisational process. Runbooks provide an incident structure; the audit tooling supports reconstruction."
+owner = "Legal and compliance"
+next_step = "Define who is told what, when, for each incident class, including affected communities."
+
+[[mapping.evidence]]
+repo = "ai-platform-reference-architecture"
+path = "docs/runbooks/agent-runtime.md"
+kind = "doc"
+contains = "## Symptoms"
+shows = "A runbook for the agent runtime with ownership, recovery targets, symptoms, first checks, mitigations and after-incident steps."
+
+[[mapping.evidence]]
+repo = "claude-agent-reference"
+path = "src/claude_agent/audit.py"
+kind = "code"
+contains = "def verify_chain"
+shows = "Audit events are hash-chained and a verifier detects edited, removed or reordered lines; content is fingerprinted and redacted before hashing."

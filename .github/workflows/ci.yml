@@ -1,0 +1,96 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Lint, types, tests (Python ${{ matrix.python }})
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - name: Install
+        run: pip install -e ".[dev]"
+      - name: Ruff lint
+        run: ruff check .
+      - name: Ruff format
+        run: ruff format --check .
+      - name: Mypy (strict)
+        run: mypy
+      - name: Tests with coverage
+        run: pytest --cov=govpack --cov-report=term-missing --cov-fail-under=85
+
+  pack:
+    name: Policy rules and reports (offline)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        run: pip install -e .
+      # Freshness findings are medium severity. They are enforced by the scheduled workflow, so a
+      # pack that has aged does not block an unrelated pull request.
+      - name: Check the pack against the policy rules
+        run: govpack check --fail-on high --format markdown | tee check.md
+      - name: Publish summary
+        if: always()
+        run: cat check.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Reports are current
+        run: govpack report --check
+
+  package:
+    name: Wheel installs and runs on its own
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Build
+        run: |
+          pip install build
+          python -m build --wheel
+      - name: Install the wheel into a clean environment and run it on a copy of the pack
+        run: |
+          python -m venv /tmp/clean
+          /tmp/clean/bin/pip install dist/*.whl
+          mkdir /tmp/pack
+          cp -r frameworks mappings systems repos.toml pack.toml evidence.lock.json /tmp/pack/
+          cd "$(mktemp -d)"
+          /tmp/clean/bin/govpack --version
+          /tmp/clean/bin/govpack check --root /tmp/pack --fail-on high
+
+  audit:
+    name: Dependency audit
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        run: pip install -e . pip-audit
+      - name: pip-audit
+        run: pip-audit --skip-editable
