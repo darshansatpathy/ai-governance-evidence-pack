@@ -164,6 +164,7 @@ Also: [method](docs/method.md), [regulatory status](docs/regulatory-status.md), 
   EUR-Lex. See [regulatory status](docs/regulatory-status.md).
 - **The weekly verification workflow has not run yet** at the time of writing; the first run is the
   first test of cloning the repositories in CI.
+- Written and tested by an AI assistant (Claude) working with the repository owner; the design has not had an independent review.
 
 ## Contributing and security
 
